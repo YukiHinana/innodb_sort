@@ -1,0 +1,4 @@
+.vscode
+*.pages
+innodb_sort
+*.o
