@@ -38,9 +38,10 @@ int main(int argc, char **argv) {
         while (fread(buffer, PAGE_SIZE, 1, f) == 1) {
             uint32_t page_number = (uint32_t)buffer[4] << 24 | (uint32_t)buffer[5] << 16 | (uint32_t)buffer[6] << 8 | buffer[7];
             uint32_t space_id = (uint32_t)buffer[34] << 24 | (uint32_t)buffer[35] << 16 | (uint32_t)buffer[36] << 8 | buffer[37];
+
+            printf("offset: %u\n", page_number);
+
             if (!dryrun) {
-                printf("offset: %u\n", page_number);
-                printf("space_id: %u\n", space_id);
                 // sort by page number
                 if (output) {
                     // write pagenumber - filesize zero pages
@@ -76,6 +77,7 @@ int main(int argc, char **argv) {
         printf("can't open the file.\n");
         return 1;
     }
-    fclose(output);
+    if (output)
+        fclose(output);
     return 0;
 }
